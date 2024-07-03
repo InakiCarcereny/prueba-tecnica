@@ -28,12 +28,6 @@
   gap: 20px;
 }
 
-.formItemLabel {
-  font-size: 1rem;
-  font-weight: 600;
-  color: white;
-}
-
 .formInput {
   width: 100%;
   padding: 10px;
@@ -44,6 +38,10 @@
   outline: none;
 }
 
+.errorBorder {
+  border: 1px solid red;
+}
+
 .formTextarea {
   width: 100%;
   padding: 10px;
@@ -52,6 +50,13 @@
   background-color: #2c2b2b;
   color: white;
   outline: none;
+  resize: none;
+}
+
+.error {
+  color: red;
+  font-weight: 500;
+  text-align: center;
 }
 
 .formButton {
@@ -62,4 +67,10 @@
   color: white;
   cursor: pointer;
   font-weight: 600;
+}
+
+.formButton:hover {
+  transform: scaleX(1.1);
+  transform: scaleY(1.1);
+  transition: 0.3s;
 }

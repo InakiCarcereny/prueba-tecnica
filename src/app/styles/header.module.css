@@ -27,6 +27,18 @@
   border-radius: 50%;
 }
 
+.containerFollow {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.follow {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+}
+
 .containerTime {
   background-color: #ff8a62;
   width: 100px;
