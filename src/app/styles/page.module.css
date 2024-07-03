@@ -12,3 +12,15 @@
   display: flex;
   gap: 15px;
 }
+
+@media screen and (max-width: 800px) {
+  .pageContainer {
+    flex-direction: column;
+    margin: 20px 10px 0 10px;
+  }
+
+  .pageSeparator {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
