@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { About } from './components/About';
 import { Interests } from './components/Interests';
 import { ContactForm } from './components/ContactForm';
+import { Toaster } from 'sonner';
 
 export default function Home() {
   
@@ -15,6 +16,7 @@ export default function Home() {
         <Interests />
       </div>
       <ContactForm />
+      <Toaster richColors />
     </main>
   );
 }
