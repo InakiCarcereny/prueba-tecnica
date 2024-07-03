@@ -22,6 +22,15 @@ export function Header () {
         </p>
       </div>
 
+      <div className={styles.containerFollow}>
+        <span className={styles.follow}>
+          567 Seguidores
+        </span>
+        <span className={styles.follow}>
+          234 Seguidos
+        </span>
+      </div>
+
       <div className={styles.containerTime}>
         <p>Aca va la hora local</p>
       </div>
