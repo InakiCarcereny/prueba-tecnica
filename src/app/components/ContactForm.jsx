@@ -8,7 +8,7 @@ import { NameIcon } from "../icons/NameIcon"
 import styles from "../styles/contactForm.module.css"
 
 export function ContactForm () {
-  const {name, email, message, error, handleChangeName, handleChangeEmail, handleChangeMessage, handleSumbit} = useContactForm()
+  const {values, handleInputChange, handleSubmit, errorName, errorEmail, errorMessage} = useContactForm()
 
   const nameId = useId()
   const emailId = useId()
@@ -18,19 +18,19 @@ export function ContactForm () {
     <footer className={styles.container}>
       <h2 className={styles.title}>Contacto</h2>
 
-      <form onSubmit={handleSumbit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formItem}>
           <label className={styles.formItemLabel} htmlFor={nameId}>
             <NameIcon />
           </label>
-          <input className={`${styles.formInput} ${error && styles.errorBorder}`} 
+          <input className={`${styles.formInput} ${errorName && styles.errorBorder}`} 
           type="text" 
           id={nameId}
           name="name" 
           placeholder="Nombre" 
           required 
-          value={name}
-          onChange={handleChangeName}
+          value={values.name}
+          onChange={handleInputChange}
           />
         </div>
 
@@ -38,14 +38,14 @@ export function ContactForm () {
           <label className={styles.formItemLabel} htmlFor={emailId}>
             <EmailIcon />
           </label>
-          <input className={`${styles.formInput} ${error && styles.errorBorder}`} 
+          <input className={`${styles.formInput} ${errorEmail && styles.errorBorder}`} 
           type="email" 
           id={emailId}
           name="email" 
           placeholder="usuario@gmail.com" 
           required 
-          value={email}
-          onChange={handleChangeEmail}
+          value={values.email}
+          onChange={handleInputChange}
           />
         </div>
 
@@ -58,13 +58,15 @@ export function ContactForm () {
            name="message" 
            placeholder="Mensaje" 
            required
-           value={message}
-           onChange={handleChangeMessage}
+           value={values.message}
+           onChange={handleInputChange}
            >
            </textarea>
         </div>
 
-        {error && <span className={styles.error}>{error}</span>}
+        {errorName && <span className={styles.error}>{errorName}</span>}
+        {errorEmail && <span className={styles.error}>{errorEmail}</span>}
+        {errorMessage && <span className={styles.error}>{errorMessage}</span>}
         
         <button className={styles.formButton} type="submit">Enviar</button>
       </form>

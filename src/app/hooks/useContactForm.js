@@ -1,70 +1,97 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 
 export function useContactForm () {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
+  const [values, setValues] = useState({
+    name: '',
+    email: '',
+    message: ''
+  })
 
-  const [error, setError] = useState(null)
+  const [errorName, setErrorName] = useState(null)
+  const [errorEmail, setErrorEmail] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
-  const handleSumbit = (e) => {
+  const isFirstRender = useRef(true)
+
+  const handleInputChange = (e) => {
+    const {name, value} = e.target
+    setValues({
+      ...values,
+      [name]: value
+    })
+  }
+
+  const handleSubmit = (e) => {
     e.preventDefault()
-    setEmail('')
-    setName('')
-    setMessage('')
+    setValues({
+      name: '',
+      email: '',
+      message: ''
+    })
+    isFirstRender.current = true
     toast.success('Mensaje enviado exitosamente')
   }
+  
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = values.name === ''
+      return
+    }
 
-  const handleChangeName = (e) => {
-    setName(e.target.value)
-  }
+    if (values.name.startsWith(' ')) {
+      setErrorName('El nombre no puede empezar con un espacio')
+      return
+    }
 
-  const handleChangeEmail = (e) => {
-    setEmail(e.target.value)
-  }
+    if (!values.name.match(/^[a-zA-Z\s]+$/)) {
+      setErrorName('El nombre solo puede contener letras y espacios')
+      return
+    }
 
-  const handleChangeMessage = (e) => {
-    setMessage(e.target.value)
-  }
+    setErrorName(null)
+
+  },[values.name])
 
   useEffect(() => {
-
-    if (!name.match(/^[a-zA-Z\s]+$/)) {
-      setError('El nombre solo puede contener letras y espacios')
+    if (isFirstRender.current) {
+      isFirstRender.current = values.email === ''
       return
     }
 
-    if (name.length < 5) {
-      setError('Introduzca un nombre valido')
+    if (values.email.startsWith(' ')) {
+      setErrorEmail('El email no puede empezar con un espacio')
       return
     }
 
-    setError(null)
+    if (!values.email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+      setErrorEmail('El email no es valido')
+      return
+    }
 
-  },[name])
+    setErrorEmail(null)
+
+  },[values.email])
 
   useEffect(() => {
-
-    if (!email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
-      setError('El email no es valido')
+    if (isFirstRender.current) {
+      isFirstRender.current = values.message === ''
       return
     }
 
-    setError(null)
-    
-  },[email])
-
-  useEffect(() => {
-
-    if(message.length < 10) {
-      setError('El mensaje debe tener al menos 10 caracteres')
+    if (values.message.startsWith(' ')) {
+      setErrorMessage('El mensaje no puede empezar con un espacio')
       return
     }
 
-    setError(null)
+    if(values.message.length < 10) {
+      setErrorMessage('El mensaje debe tener al menos 10 caracteres')
+      return
+    }
 
-  },[message])
+    setErrorMessage(null)
 
-  return {name, email, message, error, handleChangeName, handleChangeEmail, handleChangeMessage, handleSumbit}
+  },[values.message])
+
+  return {values, handleInputChange, handleSubmit, errorName, errorEmail, errorMessage}
 }
