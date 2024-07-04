@@ -1,7 +1,12 @@
+'use client'
+
 import Image from "next/image";
 import styles from "../styles/header.module.css";
+import { useState } from "react";
+import { HeartIcon } from "../icons/HeartIcon";
 
 export function Header () {
+  const [follow, setFollow] = useState(567)
 
   return (
     <header className={styles.container}>
@@ -24,16 +29,17 @@ export function Header () {
 
       <div className={styles.containerFollow}>
         <span className={styles.follow}>
-          567 Seguidores
+          {follow} <span className={styles.followText}>Seguidores</span>
         </span>
         <span className={styles.follow}>
-          234 Seguidos
+          234 <span className={styles.followText}>Seguidos</span>
         </span>
       </div>
 
-      <div className={styles.containerTime}>
-        <p>Aca va la hora local</p>
-      </div>
+      
+      <button className={styles.followButton} onClick={() => setFollow(follow + 1)}>
+        <HeartIcon />
+      </button>
     </header>
   )
 }
